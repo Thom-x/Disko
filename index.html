@@ -1,0 +1,128 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Disco</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<style>
+
+		body {
+			padding: 0;
+			margin: 0;
+			transform: translate3D(0,0,0,);
+		}
+		.blue {
+			background: blue;
+		}
+		.red {
+			background: red;
+		}
+		.yellow {
+			background: yellow;
+		}
+		.green {
+			background: green;
+		}
+		.orange {
+			background: orange;
+		}
+		.black {
+			background: black;
+		}
+		.white {
+			background: white;
+		}
+		.btnContainer {
+			padding: 5px;
+		}
+		#rate {
+			width: 20%;
+		}
+		#fullscreen {
+			position: fixed;
+			bottom: 0;
+			right: 0;
+			margin: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div class="btnContainer">
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="normal">Normal</button>
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="strobo">Stroboscope</button>
+		<div style="width:50%;display:inline-block">
+			<input class="mdl-slider mdl-js-slider" tabindex="0" id="rateInput" type="range" min="1" max="100">
+			<div class="mdl-tooltip mdl-tooltip--large" for="rateInput">
+				Frequence
+			</div>
+	</div> 
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="fullscreen">Fullscreen</button>
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+	<script>
+		var colors = ["blue", "red", "yellow", "green", "white"];
+		var colorsGrey = ["black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "black", "white"];
+		var body =document.getElementsByTagName("body")[0];
+		var normal = document.getElementById("normal");
+		var strobo = document.getElementById("strobo");
+		var rateInput = document.getElementById("rateInput");
+		var fullscreen = document.getElementById("fullscreen");
+
+		var i = 0;
+		var interval = null;
+		var rateValue = 500;
+
+		var type = 0;
+
+		rateInput.oninput = function(e) {
+			console.log(rateValue);
+		    switch (type) {
+		        case 0:
+		    		rateValue = Math.pow(((100 - e.target.value) / 100), 2) * 2000 + 10;
+		            normalFnc();
+		            break;
+		        case 1:
+		    		rateValue = Math.pow(((100 - e.target.value) / 100), 2) * 30;
+		            stroboFnc();
+		            break;
+		    }
+		}
+
+		fullscreen.onclick = function() {
+		    var docElm = document.documentElement;
+		    if (docElm.requestFullscreen) {
+		        docElm.requestFullscreen();
+		    } else if (docElm.mozRequestFullScreen) {
+		        docElm.mozRequestFullScreen();
+		    } else if (docElm.webkitRequestFullScreen) {
+		        docElm.webkitRequestFullScreen();
+		    }
+		}
+
+		function normalFnc() {
+			rateValue = Math.pow(((100 - rateInput.value) / 100), 2) * 2000 + 10;
+		    type = 0;
+		    clearInterval(interval);
+		    interval = setInterval(function() {
+		        i = ++i % 5;
+		        body.className = colors[i];
+		    }, rateValue);
+		}
+
+		function stroboFnc() {
+		    rateValue = Math.pow(((100 - rateInput.value) / 100), 2) * 30;
+		    type = 1;
+		    clearInterval(interval);
+		    interval = setInterval(function() {
+		        i = ++i % 19;
+		        body.className = colorsGrey[i];
+		    }, rateValue);
+		}
+
+		normalFnc();
+		normal.onclick = normalFnc;
+		strobo.onclick = stroboFnc;
+
+	</script>
+</body>
+</html>
