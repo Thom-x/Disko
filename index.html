@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.indigo-pink.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 	<style>
 
 		body {
@@ -75,7 +76,6 @@
 		var type = 0;
 
 		rateInput.oninput = function(e) {
-			console.log(rateValue);
 		    switch (type) {
 		        case 0:
 		    		rateValue = Math.pow(((100 - e.target.value) / 100), 2) * 2000 + 10;
@@ -123,6 +123,12 @@
 		normal.onclick = normalFnc;
 		strobo.onclick = stroboFnc;
 
+	</script>
+	<script src="/upup.min.js"></script>
+	<script>
+	UpUp.start({
+	  'content-url': 'index.html'
+	});
 	</script>
 </body>
 </html>
